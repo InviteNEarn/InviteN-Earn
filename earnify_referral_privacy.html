@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earnify - Task & Rewards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root{--bg:#0F172A;--card:#1E293B;--text:#F8FAFC;--muted:#94A3B8;--border:rgba(255,255,255,.08);--purple:#6366F1;--pink:#EC4899;--green:#10B981;--gradient:linear-gradient(135deg,#6366F1,#EC4899)}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}button,input{font-family:inherit}button{cursor:pointer}.hidden{display:none!important}
+.auth-wrapper{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at 20% 20%,rgba(99,102,241,.18),transparent 35%),radial-gradient(circle at 80% 80%,rgba(236,72,153,.15),transparent 35%),var(--bg)}
+.auth-card{width:100%;max-width:430px;background:rgba(30,41,59,.88);border:1px solid var(--border);border-radius:24px;padding:30px;box-shadow:0 25px 70px rgba(0,0,0,.35);backdrop-filter:blur(20px)}
+.brand{text-align:center;margin-bottom:28px}.brand-icon{width:62px;height:62px;margin:auto;border-radius:18px;display:grid;place-items:center;background:var(--gradient);font-size:26px}.brand h1{margin-top:15px;font-size:25px}.brand p{color:var(--muted);font-size:13px;margin-top:6px}
+.tabs{display:flex;background:rgba(15,23,42,.65);padding:5px;border-radius:12px;margin-bottom:22px}.tab{flex:1;border:0;color:var(--muted);background:transparent;padding:11px;border-radius:9px;font-weight:700}.tab.active{background:var(--gradient);color:#fff}
+.input-group{margin-bottom:15px}.input-group label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}.input-box{position:relative}.input-box i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}.input-box input,.form-control{width:100%;background:#111C30;border:1px solid var(--border);color:#fff;border-radius:12px;padding:13px 14px 13px 42px;outline:none}.input-box input:focus,.form-control:focus{border-color:var(--purple)}
+.main-btn{width:100%;border:0;border-radius:13px;padding:14px;color:#fff;font-weight:800;background:var(--gradient);box-shadow:0 10px 25px rgba(99,102,241,.2)}.bonus{font-size:11px;color:#10B981;margin-top:7px}.error{color:#FCA5A5;font-size:12px;margin-bottom:12px}
+.app{min-height:100vh;padding-bottom:100px}.header{position:sticky;top:0;z-index:20;background:rgba(15,23,42,.72);border-bottom:1px solid var(--border);backdrop-filter:blur(18px)}.header-inner{max-width:1100px;margin:auto;padding:15px 20px;display:flex;align-items:center;justify-content:space-between}.logo-area{display:flex;align-items:center;gap:10px}.mini-logo{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:var(--gradient)}.logo-area strong{font-size:16px}.balance-badge{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);color:#6EE7B7;padding:9px 13px;border-radius:30px;font-size:12px;font-weight:800}
+.container{width:min(1100px,calc(100% - 30px));margin:auto;padding-top:25px}.welcome{margin-bottom:22px}.welcome h2{font-size:25px}.welcome p{color:var(--muted);margin-top:5px;font-size:13px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:25px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:19px}.stat-icon{width:40px;height:40px;border-radius:12px;background:rgba(99,102,241,.14);color:#A5B4FC;display:grid;place-items:center;margin-bottom:13px}.stat-card small{color:var(--muted);font-size:11px}.stat-card h3{margin-top:5px;font-size:22px}.page{display:none}.page.active{display:block;animation:fade .25s ease}@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.section-title{margin-bottom:15px}.section-title h3{font-size:18px}.section-title p{color:var(--muted);font-size:12px;margin-top:4px}
+.task-list{display:grid;gap:13px}.task{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:17px;padding:15px}.task-icon{width:47px;height:47px;border-radius:14px;display:grid;place-items:center;background:rgba(236,72,153,.12);color:#F472B6;font-size:20px;flex-shrink:0}.task-info{flex:1}.task-info strong{display:block;font-size:14px}.task-info span{color:var(--muted);font-size:11px}.task-btn{border:0;color:#fff;background:var(--gradient);border-radius:10px;padding:10px 13px;font-size:11px;font-weight:800;min-width:75px}.task-btn:disabled{opacity:.6;cursor:not-allowed}
+.withdraw-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px}.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 18px}.method{border:1px solid var(--border);background:#162237;color:#fff;border-radius:12px;padding:13px;font-weight:700}.method.active{border-color:var(--purple);background:rgba(99,102,241,.12)}.withdraw-card .form-control{padding-left:14px;margin-bottom:13px}.notice{color:var(--muted);background:rgba(15,23,42,.5);border-radius:12px;padding:12px;font-size:11px;margin-bottom:15px}
+.bottom-nav{position:fixed;z-index:30;left:50%;bottom:15px;transform:translateX(-50%);width:min(470px,calc(100% - 25px));display:flex;justify-content:space-around;padding:8px;background:rgba(30,41,59,.88);border:1px solid rgba(255,255,255,.1);border-radius:20px;backdrop-filter:blur(20px);box-shadow:0 15px 45px rgba(0,0,0,.4)}.nav-btn{flex:1;border:0;background:transparent;color:var(--muted);padding:9px 5px;border-radius:13px;font-size:10px;font-weight:700}.nav-btn i{display:block;font-size:17px;margin-bottom:4px}.nav-btn.active{color:#fff;background:rgba(99,102,241,.18)}
+.modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px)}.modal-overlay.show{display:flex}.modal{width:100%;max-width:390px;background:var(--card);border:1px solid var(--border);border-radius:22px;padding:25px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.5)}.modal-icon{width:65px;height:65px;margin:0 auto 15px;border-radius:20px;display:grid;place-items:center;background:rgba(16,185,129,.13);color:#34D399;font-size:28px}.modal h3{font-size:20px}.modal p{color:var(--muted);font-size:12px;line-height:1.7;margin:10px 0 20px}.modal-actions{display:flex;gap:10px}.modal-actions button{flex:1}.secondary-btn{border:1px solid var(--border);background:transparent;color:#fff;border-radius:12px;padding:13px;font-weight:700}
+
+.referral-card,.leaderboard-card,.history-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:18px;margin-top:15px}
+.ref-box{display:flex;gap:8px;margin-top:10px}.ref-box input{flex:1;background:#111C30;border:1px solid var(--border);color:#fff;border-radius:11px;padding:11px}.small-btn{border:0;border-radius:11px;padding:10px 13px;color:#fff;background:var(--gradient);font-weight:800;font-size:11px}
+.earn-rate{margin-top:9px;color:#6EE7B7;font-size:12px;font-weight:700}
+.leader-row,.history-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}.leader-row:last-child,.history-row:last-child{border-bottom:0}
+.rank{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(99,102,241,.15);font-weight:800;font-size:12px}.leader-main,.history-main{flex:1}.leader-main strong,.history-main strong{display:block;font-size:12px}.leader-main span,.history-main span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.status{font-size:10px;font-weight:800;padding:6px 9px;border-radius:999px;background:rgba(245,158,11,.12);color:#FBBF24}
+.history-amount{font-weight:800;font-size:12px}.empty{color:var(--muted);font-size:12px;text-align:center;padding:18px}
+@media(max-width:520px){.ref-box{flex-wrap:wrap}.ref-box input{min-width:0;width:100%}}
+.toast{position:fixed;z-index:200;left:50%;top:20px;transform:translate(-50%,-100px);background:#172235;border:1px solid var(--border);color:#fff;padding:12px 17px;border-radius:12px;font-size:12px;transition:.3s;box-shadow:0 10px 30px rgba(0,0,0,.35)}.toast.show{transform:translate(-50%,0)}
+@media(min-width:700px){.stats{grid-template-columns:repeat(2,260px)}.task-list{grid-template-columns:1fr 1fr}.container{padding-top:35px}}
+</style>
+</head>
+<body>
+
+<section id="authScreen" class="auth-wrapper">
+<div class="auth-card">
+<div class="brand"><div class="brand-icon"><i class="fa-solid fa-coins"></i></div><h1>Earnify</h1><p>Complete tasks and earn reward tokens</p></div>
+<div class="tabs"><button class="tab active" id="loginTab" onclick="showAuth('login')">Login</button><button class="tab" id="registerTab" onclick="showAuth('register')">Register</button></div>
+<div id="authError" class="error hidden"></div>
+<form id="authForm" onsubmit="handleAuth(event)">
+<div class="input-group"><label>Phone or Email</label><div class="input-box"><i class="fa-solid fa-user"></i><small id="authIdentifierHint" style="display:block;color:#94A3B8;font-size:10px;margin:6px 0 10px">Phone: exactly 11 digits • Email: complete @gmail.com address</small><input id="authIdentifier" type="text" placeholder="Phone or email" required></div></div>
+<div class="input-group"><label>Password</label><div class="input-box"><i class="fa-solid fa-lock"></i><input id="authPassword" type="password" placeholder="Password" minlength="4" required minlength="8" autocomplete="current-password"></div></div>
+<div id="referralField" class="input-group hidden"><label>Referral Code</label><div class="input-box"><i class="fa-solid fa-gift"></i><input id="referralCode" type="text" placeholder="Optional referral code"></div><div class="bonus"><i class="fa-solid fa-circle-check"></i> Valid referral codes can receive a signup bonus.</div></div>
+<button class="main-btn" id="authButton" type="submit">Login</button>
+</form>
+</div>
+</section>
+
+<section id="app" class="app hidden">
+<header class="header"><div class="header-inner"><div class="logo-area"><div class="mini-logo"><i class="fa-solid fa-coins"></i></div><strong>Earnify</strong></div><div class="balance-badge"><i class="fa-solid fa-coins"></i> <span id="headerBalance">0</span> Tokens</div></div></header>
+<main class="container">
+
+<section id="homePage" class="page active">
+<div class="welcome"><h2>Hello, <span id="userName">User</span> 👋</h2><p>Complete daily tasks and collect your rewards.</p></div>
+<div class="stats"><div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-wallet"></i></div><small>Total Balance</small><h3><span id="balanceStat">0</span></h3></div><div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-users"></i></div><small>Total Invites</small><h3><span id="inviteStat">0</span></h3></div></div>
+<div class="section-title"><h3>Quick Tasks</h3><p>Earn tokens by completing simple tasks.</p></div><div class="task-list" id="homeTasks"></div>
+</section>
+
+<section id="tasksPage" class="page">
+<div class="section-title"><h3>Daily Tasks</h3><p>Complete tasks to earn reward tokens.</p></div>
+<div class="task-list" id="allTasks"></div>
+<div class="referral-card">
+  <div class="section-title" style="margin-bottom:8px"><h3><i class="fa-solid fa-user-plus"></i> Invite Friends</h3><p>Get 500 tokens for every successful referral.</p></div>
+  <div class="earn-rate">500 Tokens = Rs 250 PKR • Your referral link includes your unique code.</div>
+  <div class="ref-box"><input id="taskReferralCode" readonly><button class="small-btn" onclick="copyReferral()"><i class="fa-solid fa-link"></i> Copy Link</button></div>
+  <div class="ref-box"><input id="taskReferralLink" readonly><button class="small-btn" onclick="copyReferral()"><i class="fa-solid fa-copy"></i></button></div>
+  <button class="main-btn" style="margin-top:10px" onclick="shareReferral()"><i class="fa-solid fa-share-nodes"></i> Invite Friends</button>
+</div>
+</section>
+
+<section id="leaderboardPage" class="page">
+<div class="section-title"><h3>Leaderboard</h3><p>Monthly points and withdrawal activity.</p></div>
+<div class="leaderboard-card" id="leaderboardList"></div>
+</section>
+
+<section id="historyPage" class="page">
+<div class="section-title"><h3>Withdrawal History</h3><p>Your pending and previous withdrawal requests.</p></div>
+<div class="history-card" id="historyList"></div>
+</section>
+
+<section id="withdrawPage" class="page">
+<div class="section-title"><h3>Withdraw</h3><p>Request your available token balance.</p></div>
+<div class="withdraw-card">
+<div class="notice"><i class="fa-solid fa-circle-info"></i> Withdrawals are processed manually. Requested tokens are reserved immediately and cannot be spent again while pending.</div>
+<label style="font-size:12px;color:#94A3B8;">Payment Method</label>
+<div class="method-grid"><button class="method active" onclick="selectMethod(this,'EasyPaisa')"><i class="fa-solid fa-wallet"></i> EasyPaisa</button><button class="method" onclick="selectMethod(this,'JazzCash')"><i class="fa-solid fa-money-bill-transfer"></i> JazzCash</button></div>
+<input class="form-control" id="accountName" type="text" placeholder="Account Name">
+<input class="form-control" id="accountNumber" type="tel" placeholder="Account Number">
+<input class="form-control" id="withdrawAmount" type="number" min="1" placeholder="Tokens Amount">
+<button class="main-btn" onclick="requestWithdraw()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Request Withdrawal</button>
+</div>
+</section>
+
+<section id="profilePage" class="page"><div class="section-title"><h3>Profile</h3><p>Your account information.</p></div><div class="withdraw-card">
+<div style="text-align:center;margin-bottom:20px"><div class="modal-icon"><i class="fa-solid fa-user"></i></div><h3 id="profileName">User</h3><p id="profileIdentifier" style="color:#94A3B8;font-size:12px;margin-top:5px"></p></div>
+<div class="notice"><strong>Referral Code:</strong> <span id="profileReferral">—</span><br><strong>Reserved Tokens:</strong> <span id="reservedStat">0</span><br><strong>Token Value:</strong> 500 Tokens = Rs 250 PKR</div>
+<div class="referral-card">
+  <strong>Invite & Earn</strong>
+  <p style="color:#94A3B8;font-size:11px;margin-top:5px">Your friend can use your referral link during registration. You receive 500 tokens after a successful signup. Leaderboard contact details are masked for privacy.</p>
+  <div class="ref-box"><input id="profileReferralCopy" readonly><button class="small-btn" onclick="copyReferral()"><i class="fa-solid fa-link"></i></button></div>
+  <div class="ref-box"><input id="profileReferralLink" readonly><button class="small-btn" onclick="copyReferral()"><i class="fa-solid fa-copy"></i></button></div>
+</div>
+<button class="secondary-btn" style="width:100%;margin-top:15px" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+</div></section>
+
+</main>
+
+<nav class="bottom-nav">
+<button class="nav-btn active" onclick="navigate('homePage',this)"><i class="fa-solid fa-house"></i>Home</button>
+<button class="nav-btn" onclick="navigate('tasksPage',this)"><i class="fa-solid fa-list-check"></i>Tasks</button>
+<button class="nav-btn" onclick="navigate('leaderboardPage',this)"><i class="fa-solid fa-ranking-star"></i>Ranks</button>
+<button class="nav-btn" onclick="navigate('historyPage',this)"><i class="fa-solid fa-clock-rotate-left"></i>History</button>
+<button class="nav-btn" onclick="navigate('withdrawPage',this)"><i class="fa-solid fa-wallet"></i>Withdraw</button>
+<button class="nav-btn" onclick="navigate('profilePage',this)"><i class="fa-solid fa-user"></i>Profile</button>
+</nav>
+</section>
+
+<div id="welcomeModal" class="modal-overlay"><div class="modal"><div class="modal-icon"><i class="fa-brands fa-whatsapp"></i></div><h3>Join Our WhatsApp Channel</h3><p>Join our official WhatsApp Channel to receive important announcements, new tasks and updates. You can also join it anytime from the WhatsApp task.</p><div class="modal-actions"><button class="secondary-btn" onclick="closeWelcome()">Later</button><button class="main-btn" onclick="joinWhatsApp()">Join Channel</button></div></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+const STORAGE_USERS="earnify_users",STORAGE_SESSION="earnify_session",STORAGE_WITHDRAWALS="earnify_withdrawals";
+const WHATSAPP_URL="https://whatsapp.com/channel/0029Vb8U1Ha6GcGHXgcLO52w";
+const SITE_URL="https://earnify-wheat.vercel.app";
+const TOKENS_PER_REFERRAL=500,TOKENS_PER_RS=2,WHATSAPP_REWARD=50,YOUTUBE_REWARD=75;
+let authMode="login",selectedMethod="EasyPaisa";
+
+const demoLeaders=[
+{name:"Rio",points:4200,withdrawn:2100},
+{name:"Sultan",points:3650,withdrawn:1500},
+{name:"Kaka",points:3100,withdrawn:1250},
+{name:"Ahmad",points:2750,withdrawn:1000},
+{name:"Zain",points:2400,withdrawn:750},
+{name:"Shakeel",points:1950,withdrawn:500}
+];
+
+const tasks=[
+{id:"whatsapp",title:"Join WhatsApp Channel",description:"Open channel, then wait 30 seconds to complete",icon:"fa-brands fa-whatsapp",reward:WHATSAPP_REWARD,url:WHATSAPP_URL,timer:30},
+{id:"youtube",title:"Watch YouTube",description:"Watch the assigned video for 2 minutes",icon:"fa-brands fa-youtube",reward:YOUTUBE_REWARD,timer:120}
+];
+
+function getReferralLink(code){
+return SITE_URL+"/?ref="+encodeURIComponent(code);
+}
+function maskIdentifier(value){
+const s=String(value||"");
+if(s.includes("@")){
+const parts=s.split("@"),local=parts[0],domain=parts[1];
+if(local.length<=2)return local.charAt(0)+"***@"+domain;
+const keep=Math.max(1,Math.ceil(local.length/2));
+return local.slice(0,keep)+"*".repeat(Math.max(2,local.length-keep))+"@"+domain;
+}
+if(/^\d+$/.test(s)){
+const keep=Math.max(2,Math.ceil(s.length/2));
+return s.slice(0,keep)+"*".repeat(s.length-keep);
+}
+if(s.length<=2)return s.charAt(0)+"*";
+const keep=Math.max(1,Math.ceil(s.length/2));
+return s.slice(0,keep)+"*".repeat(s.length-keep);
+}
+function getReferralFromUrl(){
+try{return new URLSearchParams(window.location.search).get("ref")||""}catch(e){return ""}
+}
+function getUsers(){return JSON.parse(localStorage.getItem(STORAGE_USERS)||"[]")}
+function saveUsers(u){localStorage.setItem(STORAGE_USERS,JSON.stringify(u))}
+function getWithdrawals(){return JSON.parse(localStorage.getItem(STORAGE_WITHDRAWALS)||"[]")}
+function saveWithdrawals(w){localStorage.setItem(STORAGE_WITHDRAWALS,JSON.stringify(w))}
+function getSession(){return localStorage.getItem(STORAGE_SESSION)}
+function setSession(i){localStorage.setItem(STORAGE_SESSION,i)}
+function clearSession(){localStorage.removeItem(STORAGE_SESSION)}
+function getCurrentUser(){const i=getSession();return i?getUsers().find(u=>u.identifier===i)||null:null}
+
+function showAuth(mode){
+authMode=mode;loginTab.classList.toggle("active",mode==="login");registerTab.classList.toggle("active",mode==="register");
+referralField.classList.toggle("hidden",mode!=="register");authButton.textContent=mode==="login"?"Login":"Create Account";hideError();
+if(mode==="register"){const ref=getReferralFromUrl();if(ref&&referralCode)referralCode.value=ref.toUpperCase();}
+}
+function validateIdentifier(identifier){
+const value=identifier.trim();
+const isPhone=/^\d{11}$/.test(value);
+const isGmail=/^[A-Za-z0-9._%+-]+@gmail\.com$/.test(value);
+return {valid:isPhone||isGmail,isPhone,isGmail};
+}
+function handleAuth(e){
+e.preventDefault();
+const identifier=authIdentifier.value.trim(),password=authPassword.value,users=getUsers();
+const idCheck=validateIdentifier(identifier);
+if(!idCheck.valid){showError("Enter an 11-digit phone number or a complete Gmail address ending in @gmail.com.");return}
+if(password.length<8){showError("Password must be at least 8 characters.");return}
+if(authMode==="register"){
+const referral=(referralCode.value.trim()||getReferralFromUrl()).toUpperCase();
+if(users.some(u=>u.identifier===identifier)){showError("This phone/email is already registered.");return}
+const refIndex=users.findIndex(u=>String(u.referralCode||"").toUpperCase()===referral);
+const validRef=referral && refIndex!==-1;
+const user={
+identifier,password,balance:validRef?TOKENS_PER_REFERRAL:0,reservedBalance:0,invites:0,
+referralCode:generateReferralCode(),referredBy:validRef?users[refIndex].referralCode:"",
+completedTasks:{},welcomeShown:false,monthlyPoints:validRef?TOKENS_PER_REFERRAL:0,totalWithdrawn:0
+};
+if(validRef){
+users[refIndex].invites=(users[refIndex].invites||0)+1;
+users[refIndex].balance=(users[refIndex].balance||0)+TOKENS_PER_REFERRAL;
+users[refIndex].monthlyPoints=(users[refIndex].monthlyPoints||0)+TOKENS_PER_REFERRAL;
+}
+users.push(user);saveUsers(users);setSession(identifier);startApp();
+showToast(validRef?"Account created! You and your inviter received 500 tokens.":"Account created successfully!");
+}else{
+const user=users.find(u=>u.identifier===identifier&&u.password===password);
+if(!user){showError("Invalid phone/email or password.");return}
+setSession(identifier);startApp();showToast("Welcome back!")
+}}
+function generateReferralCode(){return"ER"+Math.random().toString(36).substring(2,8).toUpperCase()}
+function showError(m){authError.textContent=m;authError.classList.remove("hidden")}
+function hideError(){authError.classList.add("hidden")}
+
+function startApp(){
+const user=getCurrentUser();if(!user)return;
+if(typeof user.reservedBalance!=="number")user.reservedBalance=0;
+if(typeof user.monthlyPoints!=="number")user.monthlyPoints=0;
+if(typeof user.totalWithdrawn!=="number")user.totalWithdrawn=0;
+if(!user.completedTasks)user.completedTasks={};
+document.getElementById("authScreen").classList.add("hidden");document.getElementById("app").classList.remove("hidden");
+saveCurrentUser(user);updateUI();renderTasks();renderLeaderboard();renderHistory();
+if(!user.welcomeShown)setTimeout(()=>welcomeModal.classList.add("show"),700)
+}
+function saveCurrentUser(user){const users=getUsers(),i=users.findIndex(u=>u.identifier===user.identifier);if(i!==-1){users[i]=user;saveUsers(users)}}
+function updateUI(){
+const u=getCurrentUser();if(!u)return;
+headerBalance.textContent=u.balance;balanceStat.textContent=u.balance;inviteStat.textContent=u.invites||0;
+const n=u.identifier.includes("@")?u.identifier.split("@")[0]:u.identifier;
+userName.textContent=n;profileName.textContent=n;profileIdentifier.textContent=u.identifier;profileReferral.textContent=u.referralCode;reservedStat.textContent=u.reservedBalance||0;
+if(taskReferralCode)taskReferralCode.value=u.referralCode;
+if(taskReferralLink)taskReferralLink.value=getReferralLink(u.referralCode);
+if(profileReferralCopy)profileReferralCopy.value=u.referralCode;
+if(profileReferralLink)profileReferralLink.value=getReferralLink(u.referralCode);
+}
+
+function renderTasks(){homeTasks.innerHTML="";allTasks.innerHTML="";tasks.forEach(t=>{homeTasks.appendChild(createTaskElement(t));allTasks.appendChild(createTaskElement(t))})}
+function createTaskElement(t){
+const u=getCurrentUser(),completed=u&&u.completedTasks[t.id],w=document.createElement("div");w.className="task";
+const rewardText=t.reward>0?` • +${t.reward} tokens`:"";
+w.innerHTML=`<div class="task-icon"><i class="${t.icon}"></i></div><div class="task-info"><strong>${t.title}</strong><span>${t.description}${rewardText}</span></div><button class="task-btn" ${completed?"disabled":""} onclick="startTask('${t.id}',this)">${completed?"Completed":"Start"}</button>`;
+return w
+}
+function startTask(id,button){
+const u=getCurrentUser();if(!u)return;
+const t=tasks.find(x=>x.id===id);if(!t)return;
+if(u.completedTasks[id]){showToast("Task already completed.");return}
+if(t.url){window.open(t.url,"_blank");}
+let s=t.timer||30;button.disabled=true;button.textContent=formatTime(s);
+showToast(t.id==="whatsapp"?"WhatsApp opened. Please join and wait 30 seconds.":`Task started. Please wait ${s} seconds.`);
+const timer=setInterval(()=>{s--;button.textContent=formatTime(s);if(s<=0){clearInterval(timer);completeTask(id,t.reward)}} ,1000)
+}
+function formatTime(s){return`${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
+function completeTask(id,reward){
+const users=getUsers(),identifier=getSession(),i=users.findIndex(u=>u.identifier===identifier);if(i===-1)return;
+if(users[i].completedTasks[id])return;
+users[i].balance=(users[i].balance||0)+reward;
+users[i].monthlyPoints=(users[i].monthlyPoints||0)+reward;
+users[i].completedTasks[id]=true;
+saveUsers(users);updateUI();renderTasks();renderLeaderboard();showToast(`Task completed! +${reward} tokens`)
+}
+
+function copyReferral(){
+const u=getCurrentUser();if(!u)return;
+const link=getReferralLink(u.referralCode);
+navigator.clipboard?.writeText(link).then(()=>showToast("Referral link copied!")).catch(()=>showToast(link))
+}
+function shareReferral(){
+const u=getCurrentUser();if(!u)return;
+const link=getReferralLink(u.referralCode);
+const message=`Join Earnify Pakistan using my referral link: ${link}`;
+if(navigator.share)navigator.share({title:"Earnify Referral",text:message,url:link}).catch(()=>{});
+else{navigator.clipboard?.writeText(link);showToast("Referral link copied. Send it to your friend!")}
+}
+
+function renderLeaderboard(){
+const users=getUsers().map(u=>({name:maskIdentifier(u.identifier),points:u.monthlyPoints||0,withdrawn:Math.floor((u.totalWithdrawn||0)/TOKENS_PER_RS)}));
+const live=[...demoLeaders,...users].sort((a,b)=>b.points-a.points).slice(0,10);
+leaderboardList.innerHTML=live.map((x,i)=>`<div class="leader-row"><div class="rank">${i+1}</div><div class="leader-main"><strong>${escapeHtml(x.name)}</strong><span>${x.points.toLocaleString()} points this month • Withdrawn Rs ${x.withdrawn.toLocaleString()}</span></div><i class="fa-solid fa-trophy" style="color:#FBBF24"></i></div>`).join("");
+}
+function renderHistory(){
+const u=getCurrentUser();if(!u)return;
+const rows=getWithdrawals().filter(w=>w.identifier===u.identifier).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+if(!rows.length){historyList.innerHTML='<div class="empty">No withdrawal requests yet.</div>';return}
+historyList.innerHTML=rows.map(w=>`<div class="history-row"><div class="history-main"><strong>${escapeHtml(w.method)} • ${w.amount} tokens</strong><span>${new Date(w.createdAt).toLocaleString()} • ${escapeHtml(w.accountNumber)}</span></div><div class="history-amount">Rs ${(w.amount/TOKENS_PER_RS).toLocaleString()}<br><span class="status">${escapeHtml(w.status)}</span></div></div>`).join("");
+}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+function navigate(id,btn){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
+if(id==="leaderboardPage")renderLeaderboard();
+if(id==="historyPage")renderHistory();
+}
+function selectMethod(btn,m){document.querySelectorAll(".method").forEach(b=>b.classList.remove("active"));btn.classList.add("active");selectedMethod=m}
+
+function requestWithdraw(){
+const user=getCurrentUser();if(!user)return;
+const name=accountName.value.trim(),number=accountNumber.value.trim(),amount=Number(withdrawAmount.value);
+if(!name||!number||!amount){showToast("Please fill all fields.");return}
+if(amount<=0){showToast("Enter a valid token amount.");return}
+if(amount<500){showToast("Minimum withdrawal is 500 tokens (Rs 250).");return}
+if(amount%500!==0){showToast("Withdrawal amount must be in 500-token steps.");return}
+if(number.length<10){showToast("Enter a valid account number.");return}
+if(amount>user.balance){showToast("Insufficient available balance.");return}
+const users=getUsers(),i=users.findIndex(u=>u.identifier===user.identifier);if(i===-1){showToast("User account not found.");return}
+if(typeof users[i].reservedBalance!=="number")users[i].reservedBalance=0;
+users[i].balance-=amount;users[i].reservedBalance+=amount;
+const withdrawals=getWithdrawals();
+withdrawals.push({id:"WD-"+Date.now(),identifier:user.identifier,method:selectedMethod,accountName:name,accountNumber:number,amount,status:"Pending",createdAt:new Date().toISOString()});
+saveUsers(users);saveWithdrawals(withdrawals);updateUI();renderHistory();
+showToast(`${amount} tokens reserved. Withdrawal is Pending.`);
+accountName.value="";accountNumber.value="";withdrawAmount.value=""
+}
+
+function closeWelcome(){
+const u=getCurrentUser();if(u){u.welcomeShown=true;saveCurrentUser(u)}welcomeModal.classList.remove("show")
+}
+function joinWhatsApp(){window.open(WHATSAPP_URL,"_blank");closeWelcome()}
+function logout(){clearSession();app.classList.add("hidden");authScreen.classList.remove("hidden");authForm.reset();showAuth("login");showToast("Logged out.")}
+let toastTimer;
+function showToast(m){toast.textContent=m;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("show"),3000)}
+window.addEventListener("DOMContentLoaded",()=>{if(getSession())startApp()});
+</script>
+</body>
+</html>
